@@ -1,4 +1,4 @@
-# Node latest LTS 10.16.0 with alpine
+# Node latest LTS 10.15.3 with alpine
 # (a lightweight distribution)
 FROM node:10.15.3-alpine
 LABEL maintainer="Arthur D. <https://www.arthurdufour.com/>"
