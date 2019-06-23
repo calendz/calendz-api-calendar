@@ -15,31 +15,41 @@
 
 ## Introduction
 
-*A venir*
+Ce repository représente l'API nous permettant de récupérer les cours de notre emplois du temps. Elle est particulière de par le fait qu'elle n'interroge aucune base de données, mais se content de "scrapper" une page web, et de renvoyer les données demandées sous forme de JSON. N'ayant aucun accès à la base de données contenant nos emplois du temps, nous n'avons trouvé aucune meilleur solution que celui-ci.
+
+De plus, cette API a pour but d'être publique, afin de permettre à n'importe quel élève de notre campus de créer sa propre application requierant l'accès aux données de notre emplois du temps (ex: si quelqu'un souhaite développer une application mobile...)
 
 ## Ecosystème
 
-*A venir*
+L'API de calendz est développée avec les frameworks et outils suivants* :
 
-<!-- L'api de calendz a été développé avec les frameworks et outils suivants :
+| Librairie        | Version    | Description                                                                                      |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------------------ |
+| [Node.js]        | 10.15.3    | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.                         |
+| [Express]        | 4.17.1     | Fast, unopinionated, minimalist web framework for Node.js                                        |
+| [Cheerio]        | 1.0.0-rc.2 | Fast, flexible, and lean implementation of core jQuery designed specifically for the server.     |
+| [JsonWebToken]   | 8.5.1      | Industry standard RFC 7519 method for representing claims securely between two parties.          |
 
-| Librairie        | Version | Description                                                                                                                     |
-| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| [Node.js]        | 10.15.3 | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.                                                        |
-| [Express]        | 4.17.1  | Fast, unopinionated, minimalist web framework for Node.js                                                                       | -->
+**(Liste non exhaustive, uniquement les librairies principales sont présentées)*
 
 ## Installation & utilisation
 
 ### Pré-requis
 
-*A venir*
+* Installer Node 10.15.3
+* Créer un fichier `.env` à la source de ce repository contenant les valeurs suivantes (modifiables selon vos besoins)
 
-<!-- NODE_ENV=development
-APP_PORT=3000 -->
+      NODE_ENV=development
+      APP_PORT=3000
 
 ### Lancement
 
-*A venir*
+* Lint : `npm run lint` (corrige la syntaxe du code grâce à [ESLint](https://github.com/eslint/eslint))
+* Tests : `npm run test` (lance les tests effectués lors de l'intégration continue)
+* Production : `npm run start` (lance via node, aucun process manager n'est inclus par défaut)
+* Développement : `npm run dev` (lance avec [nodemon](https://nodemon.io/))
 
 [Node.js]: https://github.com/nodejs/node
 [Express]: https://github.com/expressjs/express
+[Cheerio]: https://github.com/Automattic/mongoose/
+[JsonWebToken]: https://github.com/auth0/node-jsonwebtoken
