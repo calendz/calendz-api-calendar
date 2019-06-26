@@ -6,7 +6,7 @@ module.exports.getMonth = (month) => {
       return '02'
     case 'mar':
       return '03'
-    case 'api':
+    case 'apr':
       return '04'
     case 'may':
       return '05'
