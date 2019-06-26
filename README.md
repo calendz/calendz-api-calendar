@@ -15,9 +15,9 @@
 
 ## Introduction
 
-Ce repository représente l'API nous permettant de récupérer les cours de notre emplois du temps. Elle est particulière de par le fait qu'elle n'interroge aucune base de données, mais se content de "scrapper" une page web, et de renvoyer les données demandées sous forme de JSON. N'ayant aucun accès à la base de données contenant nos emplois du temps, nous n'avons trouvé aucune meilleur solution que celui-ci.
+Ce repository représente l'API nous permettant de récupérer les cours de notre emploi du temps. Elle est particulière de par le fait qu'elle n'interroge aucune base de données, mais se content de "scrapper" une page web, et de renvoyer les données demandées sous forme de JSON. N'ayant aucun accès à la base de données contenant nos emploi du temps, nous n'avons trouvé aucune meilleur solution que celui-ci.
 
-De plus, cette API a pour but d'être publique, afin de permettre à n'importe quel élève de notre campus de créer sa propre application requierant l'accès aux données de notre emplois du temps (ex: si quelqu'un souhaite développer une application mobile...)
+De plus, cette API a pour but d'être publique, afin de permettre à n'importe quel élève de notre campus de créer sa propre application requierant l'accès aux données de notre emploi du temps (ex: si quelqu'un souhaite développer une application mobile...)
 
 ## Ecosystème
 
