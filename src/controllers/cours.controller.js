@@ -18,19 +18,19 @@ exports.get = async (req, res) => {
 exports.getByName = async (req, res) => {
   const _firstname = req.query.firstname
   const _lastname = req.query.lastname
-  const _professor = req.params.professor
+  const _cours = req.params.cours
 
   const date = moment('09-03-18', 'MM-DD-YY').format('MM/DD/YY')
 
-  await queryProfessor(res, _firstname, _lastname, _professor, date).then((result) => {
+  await queryCours(res, _firstname, _lastname, _cours, date).then((result) => {
     return res.status(200).json(result)
   })
 }
 
-async function queryProfessor (res, firstname, lastname, _professor, date) {
+async function queryCours (res, firstname, lastname, _cours, date) {
   return new Promise(async (resolve) => {
     const result = {}
-    const key = 'professor'
+    const key = 'cours'
     result[key] = []
     while (moment(date, 'MM/DD/YY') <= moment('07/22/19', 'MM/DD/YY')) {
       await request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUDSEM&serverid=i&Tel=${firstname}.${lastname}&date=${date}%208:00`, (err, resp, html) => {
@@ -71,7 +71,7 @@ async function queryProfessor (res, firstname, lastname, _professor, date) {
             professor = professor.split('<br>')[1]
             const room = $(el).children('table').children('tbody').children('tr').children('td.TCSalle').html().replace(/Salle:/, '')
 
-            if (professor.toLowerCase().includes(_professor.toLowerCase())) {
+            if (subject.toLowerCase().includes(_cours.toLowerCase())) {
               const data = {
                 date,
                 subject,
@@ -99,7 +99,7 @@ async function queryProfessor (res, firstname, lastname, _professor, date) {
 async function queryAll (res, firstname, lastname, date) {
   return new Promise(async (resolve) => {
     const result = []
-    let professors = []
+    let cours = []
     while (moment(date, 'MM/DD/YY') <= moment('07/22/19', 'MM/DD/YY')) {
       await request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUDSEM&serverid=i&Tel=${firstname}.${lastname}&date=${date}%208:00`, (err, resp, html) => {
         if (err || !html || resp.statusCode !== 200) {
@@ -117,16 +117,15 @@ async function queryAll (res, firstname, lastname, date) {
             if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
 
             // other informations
-            let professor = $(el).children('table').children('tbody').children('tr').children('td.TCProf').html()
-            professor = professor.split('<br>')[1]
+            const subject = $(el).children('table').children('tbody').children('tr').children('td.TCase').text()
 
-            if (professors.length === 0) {
-              result.push(professor)
-              professors.push(professor.toLowerCase())
+            if (cours.length === 0) {
+              result.push(subject)
+              cours.push(subject.toLowerCase())
             } else {
-              if (!professors.includes(professor.toLowerCase()) && professor !== '') {
-                result.push(professor)
-                professors.push(professor.toLowerCase())
+              if (!cours.includes(subject.toLowerCase()) && subject !== '') {
+                result.push(subject)
+                cours.push(subject.toLowerCase())
               }
             }
           })

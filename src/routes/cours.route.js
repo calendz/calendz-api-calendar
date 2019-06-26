@@ -1,22 +1,22 @@
 const express = require('express')
 const AuthValidationMiddleware = require('../middlewares/auth.validation.middleware')
-const ProfessorValidationMiddleware = require('../middlewares/professor.validation.middleware')
+const CoursValidationMiddleware = require('../middlewares/cours.validation.middleware')
 const UserValidateMiddleware = require('../middlewares/user.validation.middleware')
-const ProfessorController = require('../controllers/professor.controller')
+const CoursController = require('../controllers/cours.controller')
 
 const router = express.Router()
 
 router.get('/', [
   AuthValidationMiddleware.validTokenNeeded,
   UserValidateMiddleware.hasFirstnameAndLastname,
-  ProfessorController.get
+  CoursController.get
 ])
 
-router.get('/:professor', [
+router.get('/:cours', [
   AuthValidationMiddleware.validTokenNeeded,
   UserValidateMiddleware.hasFirstnameAndLastname,
-  ProfessorValidationMiddleware.hasProfessorField,
-  ProfessorController.getByName
+  CoursValidationMiddleware.hasCoursField,
+  CoursController.getByName
 ])
 
 module.exports = router
