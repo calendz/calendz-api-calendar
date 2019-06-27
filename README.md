@@ -2,6 +2,7 @@
 
 <p align="center">
   <a href="https://travis-ci.com/calendz/calendz-api-calendar"><img src="https://travis-ci.com/calendz/calendz-api-calendar.svg?branch=develop" alt="Build status of develop branch"></a>
+  <a href='https://coveralls.io/github/calendz/calendz-api-calendar?branch=develop'><img src='https://coveralls.io/repos/github/calendz/calendz-api-calendar/badge.svg?branch=develop' alt='Coverage Status' /></a>
   <a href="https://www.codacy.com/app/arthur-woosy/calendz-api-calendar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=calendz/calendz-api-calendar&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/a1ac982a16164432bf4a95d61a4fa2a1"/></a>
   <br>
   <a href="https://dependabot.com/"><img src="https://api.dependabot.com/badges/status?host=github&amp;repo=calendz/calendz-api-calendar" alt="Dependabot status"></a>
