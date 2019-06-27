@@ -3,14 +3,14 @@ language: node_js
 notifications:
   email: false
 
-  node_js:
+node_js:
   - "10.15.3"
 
 install: npm install
 
 jobs:
   include:
-    - stage: "Tests"
+    - stage: Tests
       script: npm test
       script: npm run lint
 
