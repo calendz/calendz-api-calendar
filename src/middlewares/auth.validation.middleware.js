@@ -9,7 +9,7 @@ exports.validTokenNeeded = (req, res, next) => {
   }
 
   // invalid token
-  if (!tokens.tokens.find(aToken => aToken === token)) {
+  if (!tokens.find(aToken => aToken === token)) {
     return res.status(400).json({ error: 'Invalid token' })
   }
 
