@@ -18,7 +18,7 @@ const app = express()
 // logging method
 if (config.node_env === 'development') {
   app.use(morgan('dev'))
-} else {
+} else if (config.node_env === 'production') {
   app.use(morgan('common'))
 }
 

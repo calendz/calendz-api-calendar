@@ -4,7 +4,7 @@ require('dotenv').config()
 const config = convict({
   node_env: {
     doc: 'The application runtime environment',
-    format: ['development', 'production'],
+    format: ['development', 'production', 'test'],
     default: 'development',
     arg: 'node_env',
     env: 'NODE_ENV'

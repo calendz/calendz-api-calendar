@@ -1,3 +1,4 @@
+const config = require('./config')
 const { createLogger, format, transports } = require('winston')
 
 const logger = createLogger({
@@ -10,6 +11,9 @@ const logger = createLogger({
   exitOnError: false
 })
 
-logger.info('Loaded logger.')
+// silent logger on test env
+if (config.node_env !== 'test') {
+  logger.info('Loaded logger.')
+}
 
 module.exports = logger

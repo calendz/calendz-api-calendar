@@ -6,8 +6,11 @@ node_js:
 install: npm install
 jobs:
   include:
-    - stage: test
+    - stage: "Tests"
+      name: "Unit & integration tests"
       script: npm test
+    - script: npm run lint
+      name: "Lint"
 cache:
   directories:
     - node_modules
