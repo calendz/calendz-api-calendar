@@ -1,6 +1,6 @@
 const assert = require('chai').assert
 
-const dateTranslator = require('../utils/dateTranslator')
+const dateTranslator = require('../../utils/dateTranslator')
 
 describe('./utils/dateTranslator', () => {
   // ==================================
