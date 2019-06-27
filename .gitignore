@@ -6,3 +6,7 @@ node_modules/
 
 # config
 .env
+
+# coverage
+coverage/
+.nyc_output/
