@@ -11,7 +11,7 @@ describe('./utils/dateTranslator', () => {
       assert.strictEqual(dateTranslator.getMonth('jan'), '01')
       assert.strictEqual(dateTranslator.getMonth('feb'), '02')
       assert.strictEqual(dateTranslator.getMonth('mar'), '03')
-      assert.strictEqual(dateTranslator.getMonth('api'), '04')
+      assert.strictEqual(dateTranslator.getMonth('apr'), '04')
       assert.strictEqual(dateTranslator.getMonth('may'), '05')
       assert.strictEqual(dateTranslator.getMonth('jun'), '06')
       assert.strictEqual(dateTranslator.getMonth('jul'), '07')
