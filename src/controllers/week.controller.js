@@ -4,35 +4,37 @@ const cheerio = require('cheerio')
 const logger = require('../config/winston')
 const dateTranslator = require('../utils/dateTranslator')
 
-// lists all existing users
+// get courses of current week
 exports.get = async (req, res) => {
+  // firstname and lastname params for the request
   const _firstname = req.query.firstname
   const _lastname = req.query.lastname
+
+  // get current date and format with moment
   const _date = new Date()
   const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
 
-  // TODO: fix this
-  // if querying during weekend -> show next weeks planning
-  // if (date.isoWeekday() === 6 || date.isoWeekday() === 7) {
-  //   date.add(1, 'days')
-  // }
-
+  // execute the request
   await query(res, _firstname, _lastname, date).then((result) => {
     return res.status(200).json(result)
   })
 }
 
+// get courses for a specific week with date param
 exports.getByDate = async (req, res) => {
+  // get firstname, lastname and date params for the request
   const _firstname = req.query.firstname
   const _lastname = req.query.lastname
   const _date = req.params.date
 
+  // format the date with moment
   const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
 
   if (!date) {
     return res.status(412).json({ error: 'Invalid date format' })
   }
 
+  // execute the request
   await query(res, _firstname, _lastname, date).then((result) => {
     return res.status(200).json(result)
   })
@@ -45,20 +47,25 @@ async function query (res, firstname, lastname, date) {
         logger.error(err)
         return res.status(500).json({ error: 'An error has occured whilst trying to scrape the agenda' })
       }
-
-      const $ = cheerio.load(html, { decodeEntities: true })
-      const days = $('div.BJour')
-
+      // init the response object
       const result = {}
       const key = 'week'
       result[key] = {}
+
+      // load the html of the page in the $ variable
+      const $ = cheerio.load(html, { decodeEntities: true })
+
+      // get all days of the week in days variable
+      const days = $('div.BJour')
 
       days.each(function (day, el) {
         const theDay = day
         const courses = $('div.Case')
         const leftCss = parseFloat($(el).css('left')).toFixed(2)
 
+        // loop on each course of the week
         courses.each(function (course, el) {
+          // if the course belongs to the day
           if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
 
           let day = $('.TCJour').eq(theDay)
@@ -93,6 +100,7 @@ async function query (res, firstname, lastname, date) {
             bts
           }
 
+          // push data in the response object
           if (result[key][weekday]) {
             result[key][weekday].push(data)
           } else {
@@ -101,6 +109,7 @@ async function query (res, firstname, lastname, date) {
           }
         })
       })
+      // return response object
       resolve(result)
     })
   })

@@ -4,31 +4,29 @@ const cheerio = require('cheerio')
 const logger = require('../config/winston')
 const dateTranslator = require('../utils/dateTranslator')
 
+// get cours of the current day
 exports.get = async (req, res) => {
+  // firstname and lastname params for the request
   const _firstname = req.query.firstname
   const _lastname = req.query.lastname
 
+  // get current date and format with moment
   const date = moment(new Date(), 'MM-DD-YY').format('MM/DD/YY')
 
-  // TODO: should we implement this?
-  // if querying during weekend -> show next weeks planning
-  // if (date.isoWeekday() === 6) {
-  //   date.add(2, 'days')
-  // }
-  // if (date.isoWeekday() === 7) {
-  //   date.add(1, 'days')
-  // }
-
+  // execute the request
   await query(res, _firstname, _lastname, date).then((result) => {
     return res.status(200).json(result)
   })
 }
 
+// get cours of a specific day with date param
 exports.getByDate = async (req, res) => {
+  // firstname, lastname and date params
   const _firstname = req.query.firstname
   const _lastname = req.query.lastname
   const _date = req.params.date
 
+  // format the date with moment
   const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
 
   if (!date) {
@@ -48,12 +46,16 @@ async function query (res, firstname, lastname, date) {
         return res.status(500).json({ error: 'An error has occured whilst trying to scrape the agenda' })
       }
 
-      const $ = cheerio.load(html, { decodeEntities: true })
-      const courses = $('div.Ligne')
-
+      // init the response object
       const result = {}
       const key = 'courses'
       result[key] = []
+
+      // load the html of the page in the $ variable
+      const $ = cheerio.load(html, { decodeEntities: true })
+
+      // get all courses in the variable
+      const courses = $('div.Ligne')
 
       courses.each(function (course, el) {
         const start = $(el).children('div.Debut').text()
@@ -72,8 +74,11 @@ async function query (res, firstname, lastname, date) {
           room,
           weekday
         }
+
+        // push the data in the response object
         result[key].push(data)
       })
+      // return the response
       resolve(result)
     })
   })
