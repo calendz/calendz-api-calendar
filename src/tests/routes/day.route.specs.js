@@ -1,7 +1,7 @@
 const assert = require('chai').assert
 const request = require('supertest')
 const app = require('../../app')
-const token = require('../../config/tokens')[0]
+const token = require('../../config/tokens').tokens[0]
 
 describe('./routes/day.route', () => {
   // =========================

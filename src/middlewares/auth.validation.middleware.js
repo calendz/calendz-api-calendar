@@ -1,4 +1,4 @@
-const tokens = require('../config/tokens')
+const tokens = require('../config/tokens').tokens
 
 exports.validTokenNeeded = (req, res, next) => {
   const token = req.params.token || req.body.token || req.headers['x-access-token'] || req.query.token
