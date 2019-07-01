@@ -58,7 +58,9 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   logger.error('Uncaught exception', err)
   err.status = 400
-  res.status(err.status || 500).json({ error: 'Internal server error' })
+  res.status(err.status || 500).json({
+    message: 'Internal server error'
+  })
   next(err)
 })
 

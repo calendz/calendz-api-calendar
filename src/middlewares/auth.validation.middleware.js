@@ -5,12 +5,16 @@ exports.validTokenNeeded = (req, res, next) => {
 
   // no token provided
   if (!token) {
-    return res.status(401).json({ error: 'Authentication required' })
+    return res.status(401).json({
+      message: 'Authentication required'
+    })
   }
 
   // invalid token
   if (!tokens.find(aToken => aToken === token)) {
-    return res.status(400).json({ error: 'Invalid token' })
+    return res.status(400).json({
+      message: 'Invalid token'
+    })
   }
 
   return next()
