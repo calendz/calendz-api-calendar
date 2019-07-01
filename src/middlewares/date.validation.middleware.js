@@ -7,7 +7,9 @@ exports.hasValidDate = (req, res, next) => {
   const date2 = new Date(_date)
 
   if (!_date) {
-    return res.status(412).json({ error: 'Missing date field' })
+    return res.status(412).json({
+      message: 'Missing date field'
+    })
   }
 
   let dd = date2.getDate()
@@ -18,7 +20,9 @@ exports.hasValidDate = (req, res, next) => {
   if (mm < 10) mm = '0' + mm
 
   if (date1 !== `${mm}/${dd}/${yy}`) {
-    return res.status(409).json({ error: 'Invalid date format' })
+    return res.status(409).json({
+      message: 'Invalid date format'
+    })
   }
 
   return next()

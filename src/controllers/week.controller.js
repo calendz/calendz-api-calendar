@@ -31,7 +31,9 @@ exports.getByDate = async (req, res) => {
   const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
 
   if (!date) {
-    return res.status(412).json({ error: 'Invalid date format' })
+    return res.status(412).json({
+      message: 'Invalid date format'
+    })
   }
 
   // execute the request
@@ -45,7 +47,9 @@ async function query (res, firstname, lastname, date) {
     request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUDSEM&serverid=i&Tel=${firstname}.${lastname}&date=${date}%208:00`, (err, resp, html) => {
       if (err || !html || resp.statusCode !== 200) {
         logger.error(err)
-        return res.status(500).json({ error: 'An error has occured whilst trying to scrape the agenda' })
+        return res.status(500).json({
+          message: 'An error has occured whilst trying to scrape the agenda'
+        })
       }
       // init the response object
       const result = {}

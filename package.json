@@ -7,9 +7,9 @@
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "./node_modules/.bin/nodemon ./src/app.js",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha ./src/tests --recursive",
-    "test:coverage": "NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha ./src/tests --recursive",
-    "test:coveralls": "NODE_ENV=test nyc --reporter=text-lcov ./node_modules/.bin/mocha ./src/tests --recursive | coveralls",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha ./src/tests --recursive --exit",
+    "test:coverage": "NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha ./src/tests --recursive --exit",
+    "test:coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/.bin/eslint ./",
     "lint:fix": "./node_modules/.bin/eslint ./ --fix"
   },

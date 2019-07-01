@@ -57,7 +57,9 @@ async function queryCours (res, firstname, lastname, _cours, dateStart, dateEnd)
       await request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUDSEM&serverid=i&Tel=${firstname}.${lastname}&date=${dateStart}%208:00`, (err, resp, html) => {
         if (err || !html || resp.statusCode !== 200) {
           logger.error(err)
-          return res.status(500).json({ error: 'An error has occured whilst trying to scrape the agenda' })
+          return res.status(500).json({
+            message: 'An error has occured whilst trying to scrape the agenda'
+          })
         }
 
         // load html in $ variable
@@ -135,7 +137,9 @@ async function queryAll (res, firstname, lastname, date) {
       await request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUDSEM&serverid=i&Tel=${firstname}.${lastname}&date=${date}%208:00`, (err, resp, html) => {
         if (err || !html || resp.statusCode !== 200) {
           logger.error(err)
-          return res.status(500).json({ error: 'An error has occured whilst trying to scrape the agenda' })
+          return res.status(500).json({
+            message: 'An error has occured whilst trying to scrape the agenda'
+          })
         }
         const $ = cheerio.load(html, { decodeEntities: true })
         const days = $('div.BJour')
