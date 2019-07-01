@@ -1,0 +1,19 @@
+language: node_js
+
+notifications:
+  email: false
+
+node_js:
+  - "10.15.3"
+
+install: npm install
+
+jobs:
+  include:
+    - stage: Tests
+      script: npm run lint
+      script: npm run test:coveralls
+
+cache:
+  directories:
+    - node_modules
