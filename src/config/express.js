@@ -15,10 +15,12 @@ const app = express()
 // == misc configuration
 // ============================================
 
+/* istanbul ignore if */
 // logging method
 if (config.node_env === 'development') {
   app.use(morgan('dev'))
 } else if (config.node_env === 'production') {
+  /* istanbul ignore next */
   app.use(morgan('common'))
 }
 
@@ -54,6 +56,7 @@ app.use((req, res, next) => {
   next()
 })
 
+/* istanbul ignore next */
 // error handler, send stacktrace only during development
 app.use((err, req, res, next) => {
   logger.error('Uncaught exception', err)

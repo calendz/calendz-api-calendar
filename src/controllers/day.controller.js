@@ -43,6 +43,7 @@ exports.getByDate = async (req, res) => {
 async function query (res, firstname, lastname, date) {
   return new Promise((resolve) => {
     request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUD&serverid=i&tel=${firstname}.${lastname}&date=${date}%208:00`, (err, resp, html) => {
+      /* istanbul ignore if */
       if (err || !html || resp.statusCode !== 200) {
         logger.error(err)
         return res.status(500).json({

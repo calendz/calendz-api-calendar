@@ -5,6 +5,7 @@ const app = require('./config/express')
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
 if (!module.parent) {
+  /* istanbul ignore next */
   // start the web server
   app.listen(config.app_port, () => {
     logger.info('Loaded express.')
