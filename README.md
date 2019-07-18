@@ -41,7 +41,14 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
 * Créer un fichier `.env` à la source de ce repository contenant les valeurs suivantes (modifiables selon vos besoins)
 
       NODE_ENV=development
+
       APP_PORT=3000
+
+      DB_HOST=calendz-database
+      DB_PORT=27017
+      DB_NAME=calendz
+      DB_USER=username
+      DB_PASSWORD=password
 
 ### Lancement
 
