@@ -11,7 +11,8 @@ const courseSchema = new Schema({
       date: { type: String, required: true },
       weekday: { type: String, enum: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'], required: true },
       start: { type: String, required: true },
-      end: { type: String, required: true }
+      end: { type: String, required: true },
+      room: { type: String, required: true }
     }
   ]
 })
