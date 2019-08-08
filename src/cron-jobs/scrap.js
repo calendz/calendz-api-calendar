@@ -33,7 +33,7 @@ module.exports.initScrap = async () => {
       name.splice(name.length - 1, 1)
       let lastName = name.join(' ')
       console.log(firstName + ' - ' + lastName)
-      if (firstName.length >= 2 && lastName >= 2) {
+      if (firstName.length >= 2 && lastName.length >= 2) {
         professorsList.push(new ProfessorModel({
           _id: mongoose.Types.ObjectId(),
           firstname: firstName,
@@ -67,7 +67,7 @@ module.exports.initScrap = async () => {
           courses: [
             {
               date: element.date,
-              weekday: element.weekday,
+              weekday: element.weekday.charAt(0).toUpperCase() + element.weekday.slice(1),
               start: element.start,
               end: element.end,
               room: element.room
