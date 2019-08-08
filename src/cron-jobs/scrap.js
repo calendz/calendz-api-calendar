@@ -5,11 +5,89 @@ const cheerio = require('cheerio')
 const logger = require('../config/winston')
 const UserModel = require('../models/user.model')
 const dateTranslator = require('../utils/dateTranslator')
+const ProfessorModel = require('../models/professor.model')
+const CourseModel = require('../models/course.model')
+const mongoose = require('mongoose')
 
-module.exports.initScrap = async function initScrap () {
+module.exports.initScrap = async () => {
   try {
-    let courses = await findUsers()
-    console.log('Cours final : ' + courses)
+    // List of all professors and courses from the scrap
+    let itemsList
+
+    // List of professors and list of courses that will
+    // contain all professors and courses objects
+    let professorsList = []
+    let coursesList = []
+
+    // Get the result from the scrap
+    await findUsers().then((result) => {
+      console.log(result)
+      itemsList = result
+    })
+
+    // Create professor object for each element in the list
+    // and push them in the professors list
+    itemsList['professors'].forEach(function (element) {
+      let name = element.split(' ')
+      let firstName = name[name.length - 1]
+      name.splice(name.length - 1, 1)
+      let lastName = name.join(' ')
+      console.log(firstName + ' - ' + lastName)
+      if (firstName.length >= 2 && lastName >= 2) {
+        professorsList.push(new ProfessorModel({
+          _id: mongoose.Types.ObjectId(),
+          firstname: firstName,
+          lastname: lastName
+        }))
+      }
+    })
+
+    // Create course object for each element in the list
+    // and push them in the courses list
+    itemsList['courses'].forEach(function (element) {
+      let name = element.professor.split(' ')
+      let firstname = name[name.length - 1]
+      name.splice(name.length - 1, 1)
+      let lastname = name.join(' ')
+      let professorId = 0
+
+      // Search the id of the matching professor
+      professorsList.forEach(function (el) {
+        if (el.firstname === firstname && el.lastname === lastname) {
+          professorId = el._id
+        }
+      })
+
+      if (professorId !== 0) {
+        coursesList.push(new CourseModel({
+          subject: element.subject,
+          grade: 'B1 G1',
+          bts: element.bts,
+          professor: professorId,
+          courses: [
+            {
+              date: element.date,
+              weekday: element.weekday,
+              start: element.start,
+              end: element.end,
+              room: element.room
+            }
+          ]
+        }))
+      }
+    })
+
+    // Delete all professors and courses from the database
+    await ProfessorModel.deleteMany({})
+    await CourseModel.deleteMany({})
+
+    // Push all professors and courses in the database
+    await ProfessorModel.insertMany(professorsList).then(() => {
+      logger.info(`=> inserted all professors`)
+    })
+    await CourseModel.insertMany(coursesList).then(() => {
+      logger.info(`=> inserted all courses`)
+    })
 
     // Sera utilisé pour le cron
     cron.schedule('* * 3 * *', () => {
@@ -21,31 +99,42 @@ module.exports.initScrap = async function initScrap () {
 }
 
 async function findUsers () {
-  const groups = ['B1 G1', 'B1 G2', 'B2 G1', 'B2 G2', 'B3 G1', 'B3 G2', 'B3 G3', 'I4 G1', 'I4 G2', 'I5 G1', 'I5 G2']
-  let result = {}
-  let coursesList = []
-  let professorsList = []
+  return new Promise(async (resolve) => {
+    const groups = ['B1 G1', 'B1 G2', 'B2 G1', 'B2 G2', 'B3 G1', 'B3 G2', 'B3 G3', 'I4 G1', 'I4 G2', 'I5 G1', 'I5 G2']
+    let result = {}
+    let coursesList = []
+    let professorsList = []
 
-  groups.forEach(async function (el) {
-    const user = await UserModel.findOne({ grade: el }, 'firstname lastname')
-    if (user) {
-      let courses = await getCourses(user.firstname.toLowerCase(), user.lastname.toLowerCase())
-      coursesList.push(courses)
-      courses.each(function (element) {
-        if (!professorsList.includes(element.professor)) {
-          professorsList.push(element.professor)
-        }
-      })
+    // Async foreach function
+    const asyncForEach = async (array, callback) => {
+      for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array)
+      }
     }
 
-    const keyCourses = 'courses'
-    result[keyCourses] = coursesList
+    // Get one user for each froup in the database
+    await asyncForEach(groups, async (el) => {
+      const user = await UserModel.findOne({ grade: el }, 'firstname lastname')
+      if (user) {
+        // Get the courses of the user
+        let courses = await getCourses(user.firstname.toLowerCase(), user.lastname.toLowerCase())
+        coursesList.push(courses)
+        courses.forEach(function (element) {
+          if (!professorsList.includes(element.professor) && element.professor !== '') {
+            professorsList.push(element.professor)
+          }
+        })
+      }
 
-    const keyProfessors = 'professors'
-    result[keyProfessors] = professorsList
+      const keyCourses = 'courses'
+      result[keyCourses] = coursesList[0]
+
+      const keyProfessors = 'professors'
+      result[keyProfessors] = professorsList
+    })
+
+    resolve(result)
   })
-
-  return result
 }
 
 async function getCourses (firstname, lastname) {
