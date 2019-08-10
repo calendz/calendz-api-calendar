@@ -14,7 +14,7 @@ describe('./routes/week.route', () => {
     // make sure route gets user's firstname & lastname
     helper.testFirstnameAndLastname('/api/v1/week')
 
-    it('should success (200) : ok', (done) => {
+    it.skip('should success (200) : ok', (done) => {
       request(app).get('/api/v1/week').set(helper.defaultSetsWithAuth).expect('Content-Type', /json/)
         .query({ firstname: 'Arthur', lastname: 'Dufour' })
         .expect(200)
@@ -39,7 +39,7 @@ describe('./routes/week.route', () => {
     // make sure date is valid
     helper.testDate('/api/v1/week/aze')
 
-    it('should success (200) : ok', (done) => {
+    it.skip('should success (200) : ok', (done) => {
       request(app).get('/api/v1/week/06-06-19').set(helper.defaultSetsWithAuth).expect('Content-Type', /json/)
         .query({ firstname: 'Arthur', lastname: 'Dufour' })
         .expect(200)
