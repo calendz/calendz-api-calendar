@@ -11,3 +11,7 @@ package-lock.json
 # coverage
 coverage/
 .nyc_output/
+
+# ssh key for deployment
+deploy_key
+deploy_key.pub
