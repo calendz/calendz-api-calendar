@@ -31,6 +31,7 @@ initMongo(async () => {
     logger.info(`Server started on http://localhost:${port}.`)
   })
 
+  /* istanbul ignore if */
   if (config.scrapping) {
     cronScrap.initScrap()
   }

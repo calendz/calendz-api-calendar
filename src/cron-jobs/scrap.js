@@ -1,4 +1,5 @@
-var cron = require('node-cron')
+/* istanbul ignore file */
+const cron = require('node-cron')
 const moment = require('moment')
 const request = require('request-promise')
 const cheerio = require('cheerio')

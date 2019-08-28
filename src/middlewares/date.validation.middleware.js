@@ -6,12 +6,6 @@ exports.hasValidDate = (req, res, next) => {
   const date1 = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
   const date2 = new Date(_date)
 
-  if (!_date) {
-    return res.status(412).json({
-      message: 'Missing date field'
-    })
-  }
-
   let dd = date2.getDate()
   let mm = date2.getMonth() + 1
 
