@@ -5,9 +5,10 @@ const initMongo = require('./config/mongoose')
 const seedData = require('./mock/seedData')
 const cronScrap = require('./cron-jobs/scrap')
 
-// module.parent check is required to support mocha watch
-// src: https://github.com/mochajs/mocha/issues/1912
-// if (!module.parent) {
+// if running unit tests, disable logs
+if (config.node_env === 'test') {
+  logger.disableLogs()
+}
 
 // 1st: establish mongodb connection
 initMongo(async () => {
@@ -34,6 +35,5 @@ initMongo(async () => {
     cronScrap.initScrap()
   }
 })
-// }
 
 module.exports = app

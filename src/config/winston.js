@@ -18,3 +18,8 @@ if (config.node_env !== 'test') {
 }
 
 module.exports = logger
+
+// function that disables all winston logs
+module.exports.disableLogs = async function () {
+  logger.transports.forEach((t) => (t.silent = true))
+}
