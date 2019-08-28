@@ -1,7 +1,7 @@
 # Node latest LTS 10.15.3 with alpine
 # (a lightweight distribution)
 FROM node:10.15.3-alpine
-LABEL maintainer="Arthur D. <https://www.arthurdufour.com/>"
+LABEL maintainer="Calendz. <https://calendz.app/>"
 
 # add some required packages
 RUN apk update && apk upgrade && \
