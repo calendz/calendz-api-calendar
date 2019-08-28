@@ -15,17 +15,29 @@ jobs:
         - npm run lint
         - npm run test:coverage
         - npm run test:coveralls
-
-after_success:
-  - wget https://raw.githubusercontent.com/calendz/travis-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh success $DISCORD_WEBHOOK_URL
-
-after_failure:
-  - wget https://raw.githubusercontent.com/calendz/travis-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh failure $DISCORD_WEBHOOK_URL
+      after_success:
+        - wget https://raw.githubusercontent.com/calendz/travis-discord-webhook/master/send.sh
+        - chmod +x send.sh
+        - ./send.sh success $DISCORD_WEBHOOK_URL
+      after_failure:
+        - wget https://raw.githubusercontent.com/calendz/travis-discord-webhook/master/send.sh
+        - chmod +x send.sh
+        - ./send.sh failure $DISCORD_WEBHOOK_URL
   
+    # Build and push both current version & latest version
+    - stage: Build Docker image
+      if: branch = feature/continuous-deployment
+      script:
+      - "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+      - echo "==== Building calendz/api-calendar:$PACKAGE_VERSION ===="
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t calendz/api-calendar .
+      - docker images
+      - docker tag calendz/api-calendar calendz/api-calendar:latest
+      - docker tag calendz/api-calendar calendz/api-calendar:${PACKAGE_VERSION}
+      - docker push calendz/api-calendar:latest
+      - docker push calendz/api-calendar:${PACKAGE_VERSION}
+
 cache:
   directories:
     - node_modules
