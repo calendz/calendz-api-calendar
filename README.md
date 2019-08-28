@@ -44,6 +44,8 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
 
       APP_PORT=3000
 
+      SCRAPPING=true
+
       DB_HOST=calendz-database
       DB_PORT=27017
       DB_NAME=calendz

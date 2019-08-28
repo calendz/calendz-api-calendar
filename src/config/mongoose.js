@@ -20,7 +20,7 @@ module.exports = async function initConnection (callback) {
   await mongoose.connect(mongoUri, mongooseOpt).then(() => {
     logger.info('Connected to MongoDB.')
     callback()
-  }).catch((err) => {
+  }).catch(/* istanbul ignore next */(err) => {
     logger.error('MongoDB connection failed: ', err)
   })
 

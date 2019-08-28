@@ -29,12 +29,6 @@ exports.getByDate = async (req, res) => {
   // format the date with moment
   const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
 
-  if (!date) {
-    return res.status(412).json({
-      message: 'Invalid date format'
-    })
-  }
-
   await query(res, _firstname, _lastname, date).then((result) => {
     return res.status(200).json(result)
   })

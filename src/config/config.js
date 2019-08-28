@@ -16,6 +16,13 @@ const config = convict({
     arg: 'app_port',
     env: 'APP_PORT'
   },
+  scrapping: {
+    doc: 'Whether scrapping should be enabled or not',
+    format: Boolean,
+    default: false,
+    arg: 'scrapping',
+    env: 'SCRAPPING'
+  },
   populate: {
     doc: 'Should populate DB w/ fake dataset?',
     format: Boolean,
