@@ -46,7 +46,7 @@ app.use(cors())
 // ============================================
 
 // API router
-app.use('/api/v1/', routes)
+app.use('/v1/', routes)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
