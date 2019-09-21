@@ -12,5 +12,5 @@ coverage/
 .nyc_output/
 
 # ssh key for deployment
-deploy_key
-deploy_key.pub
+deploy_rsa
+deploy_rsa.pub
