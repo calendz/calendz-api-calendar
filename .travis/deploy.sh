@@ -1,7 +1,7 @@
 #!/bin/bash
 eval "$(ssh-agent -s)" # Start ssh-agent cache
-chmod 600 .travis/deploy_key # Allow read access to the private key
-ssh-add .travis/deploy_key # Add the private key to SSH
+chmod 600 .travis/deploy_rsa # Allow read access to the private key
+ssh-add .travis/deploy_rsa # Add the private key to SSH
 
 # Execute the following commands through ssh
 ssh -o "StrictHostKeyChecking=no" $SSH_USER@$SSH_IP -p $SSH_PORT <<EOF

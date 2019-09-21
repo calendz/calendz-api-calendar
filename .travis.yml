@@ -7,7 +7,7 @@ node_js:
   - "10.15.3"
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_af7daded3ffa_key -iv $encrypted_af7daded3ffa_iv
+- openssl aes-256-cbc -K $encrypted_d810adeb7664_key -iv $encrypted_d810adeb7664_iv
   -in .travis/deploy_key.enc -out .travis/deploy_key -d
 
 install: npm install
@@ -28,7 +28,7 @@ jobs:
         - wget https://raw.githubusercontent.com/calendz/travis-discord-webhook/master/send.sh
         - chmod +x send.sh
         - ./send.sh failure $DISCORD_WEBHOOK_URL
-  
+
     # Build and push both current version & latest version
     - stage: Build Docker image
       if: branch = master
