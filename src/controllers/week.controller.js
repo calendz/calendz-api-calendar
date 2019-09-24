@@ -12,7 +12,9 @@ exports.get = async (req, res) => {
 
   // get current date and format with moment
   const _date = new Date()
-  const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
+  let date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
+
+  if (moment(date, 'MM/DD/YY').day() === 0) date = moment(date, 'MM/DD/YY').add(1, 'days').format('MM/DD/YY')
 
   // execute the request
   await query(res, _firstname, _lastname, date).then((result) => {
@@ -65,7 +67,7 @@ async function query (res, firstname, lastname, date) {
         // loop on each course of the week
         courses.each(function (course, el) {
           // if the course belongs to the day
-          if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
+          if (parseFloat($(el).css('left')).toFixed(1) !== (parseFloat(parseFloat(leftCss) + 9.8)).toFixed(1)) if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
 
           let day = $('.TCJour').eq(theDay)
           day = day.html()

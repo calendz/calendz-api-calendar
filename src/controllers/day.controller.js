@@ -11,7 +11,9 @@ exports.get = async (req, res) => {
   const _lastname = req.query.lastname
 
   // get current date and format with moment
-  const date = moment(new Date(), 'MM-DD-YY').format('MM/DD/YY')
+  let date = moment(new Date(), 'MM-DD-YY').format('MM/DD/YY')
+
+  if (moment(date, 'MM/DD/YY').day() === 0) date = moment(date, 'MM/DD/YY').add(1, 'days').format('MM/DD/YY')
 
   // execute the request
   await query(res, _firstname, _lastname, date).then((result) => {
