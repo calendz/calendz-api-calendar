@@ -67,7 +67,7 @@ async function query (res, firstname, lastname, date) {
         // loop on each course of the week
         courses.each(function (course, el) {
           // if the course belongs to the day
-          if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
+          if (parseFloat($(el).css('left')).toFixed(1) !== (parseFloat(parseFloat(leftCss) + 9.8)).toFixed(1)) if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
 
           let day = $('.TCJour').eq(theDay)
           day = day.html()
