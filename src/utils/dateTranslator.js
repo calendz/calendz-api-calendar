@@ -1,29 +1,29 @@
 module.exports = {
   getMonth: (month) => {
     switch (month.toLowerCase()) {
-      case 'jan':
+      case 'janvier':
         return '01'
-      case 'feb':
+      case 'février':
         return '02'
-      case 'mar':
+      case 'mars':
         return '03'
-      case 'apr':
+      case 'avril':
         return '04'
-      case 'may':
+      case 'mai':
         return '05'
-      case 'jun':
+      case 'juin':
         return '06'
-      case 'jul':
+      case 'juillet':
         return '07'
-      case 'aug':
+      case 'aout':
         return '08'
-      case 'sep':
+      case 'septembre':
         return '09'
-      case 'oct':
+      case 'octobre':
         return '10'
-      case 'nov':
+      case 'novembre':
         return '11'
-      case 'dec':
+      case 'decembre':
         return '12'
       default:
         throw new Error('Unrecognized month name')
