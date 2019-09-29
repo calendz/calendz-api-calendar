@@ -8,18 +8,18 @@ describe('./utils/dateTranslator', () => {
   // ==================================
   describe('#getMonth', () => {
     it('should translate months to numbers', () => {
-      assert.strictEqual(dateTranslator.getMonth('jan'), '01')
-      assert.strictEqual(dateTranslator.getMonth('feb'), '02')
-      assert.strictEqual(dateTranslator.getMonth('mar'), '03')
-      assert.strictEqual(dateTranslator.getMonth('apr'), '04')
-      assert.strictEqual(dateTranslator.getMonth('may'), '05')
-      assert.strictEqual(dateTranslator.getMonth('jun'), '06')
-      assert.strictEqual(dateTranslator.getMonth('jul'), '07')
-      assert.strictEqual(dateTranslator.getMonth('aug'), '08')
-      assert.strictEqual(dateTranslator.getMonth('sep'), '09')
-      assert.strictEqual(dateTranslator.getMonth('oct'), '10')
-      assert.strictEqual(dateTranslator.getMonth('nov'), '11')
-      assert.strictEqual(dateTranslator.getMonth('dec'), '12')
+      assert.strictEqual(dateTranslator.getMonth('janvier'), '01')
+      assert.strictEqual(dateTranslator.getMonth('février'), '02')
+      assert.strictEqual(dateTranslator.getMonth('mars'), '03')
+      assert.strictEqual(dateTranslator.getMonth('avril'), '04')
+      assert.strictEqual(dateTranslator.getMonth('mai'), '05')
+      assert.strictEqual(dateTranslator.getMonth('juin'), '06')
+      assert.strictEqual(dateTranslator.getMonth('juillet'), '07')
+      assert.strictEqual(dateTranslator.getMonth('aout'), '08')
+      assert.strictEqual(dateTranslator.getMonth('septembre'), '09')
+      assert.strictEqual(dateTranslator.getMonth('octobre'), '10')
+      assert.strictEqual(dateTranslator.getMonth('novembre'), '11')
+      assert.strictEqual(dateTranslator.getMonth('decembre'), '12')
     })
 
     it('should throw an "Unrecognized month name" Error', () => {
