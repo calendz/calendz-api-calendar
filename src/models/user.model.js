@@ -7,7 +7,8 @@ const userSchema = new Schema({
   email: { type: String, minLength: 12, maxLength: 64, required: true, unique: true },
   password: { type: String, minLength: 6, maxLength: 64, required: true },
   permissionLevel: { type: String, enum: ['MEMBER', 'ADMIN'], default: 'MEMBER', required: true },
-  grade: { type: String, enum: ['B1 G1', 'B1 G2', 'B2 G1', 'B2 G2', 'B3 G1', 'B3 G2', 'B3 G3', 'I4 G1', 'I4 G2', 'I5 G1', 'I5 G2'], required: true },
+  grade: { type: String, enum: ['B1', 'B2', 'B3', 'I1', 'I2'], required: true },
+  city: { type: String, enum: ['Arras', 'Auxerre', 'Bordeaux', 'Brest', 'Grenoble', 'Lille', 'Lyon', 'Montpellier', 'Nantes', 'Paris', 'Dakar'], required: true },
   bts: { type: Boolean, default: false, required: false },
   isActive: { type: Boolean, default: false, required: true }
 })
