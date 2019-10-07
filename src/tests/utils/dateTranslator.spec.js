@@ -19,7 +19,7 @@ describe('./utils/dateTranslator', () => {
       assert.strictEqual(dateTranslator.getMonth('septembre'), '09')
       assert.strictEqual(dateTranslator.getMonth('octobre'), '10')
       assert.strictEqual(dateTranslator.getMonth('novembre'), '11')
-      assert.strictEqual(dateTranslator.getMonth('decembre'), '12')
+      assert.strictEqual(dateTranslator.getMonth('décembre'), '12')
     })
 
     it('should throw an "Unrecognized month name" Error', () => {
