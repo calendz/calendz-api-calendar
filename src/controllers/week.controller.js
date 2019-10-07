@@ -54,7 +54,7 @@ async function query (res, firstname, lastname, dateScrap) {
       result[key] = {}
 
       // load the html of the page in the $ variable
-      const $ = cheerio.load(html, { decodeEntities: true })
+      const $ = cheerio.load(html, { decodeEntities: false })
 
       // get all days of the week in days variable
       const days = $('div.Jour')

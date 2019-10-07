@@ -23,7 +23,7 @@ module.exports = {
         return '10'
       case 'novembre':
         return '11'
-      case 'decembre':
+      case 'décembre':
         return '12'
       default:
         throw new Error('Unrecognized month name')
