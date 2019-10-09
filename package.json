@@ -1,6 +1,6 @@
 {
   "name": "calendz-api-calendar",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "description": "API wrapper for EPSI's agenda",
   "private": true,
   "main": "app.js",
