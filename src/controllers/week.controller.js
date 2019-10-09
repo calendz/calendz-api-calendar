@@ -38,9 +38,9 @@ exports.getByDate = async (req, res) => {
   })
 }
 
-async function query (res, firstname, lastname, date) {
+async function query (res, firstname, lastname, dateScrap) {
   return new Promise((resolve) => {
-    request(`http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUDSEM&serverid=i&Tel=${firstname}.${lastname}&date=${date}%208:00`, (err, resp, html) => {
+    request(`https://edtmobiliteng.wigorservices.net//WebPsDyn.aspx?action=posEDTBEECOME&serverid=i&Tel=${firstname}.${lastname}&date=${dateScrap}`, (err, resp, html) => {
       /* istanbul ignore if */
       if (err || !html || resp.statusCode !== 200) {
         logger.error(err)
@@ -54,41 +54,50 @@ async function query (res, firstname, lastname, date) {
       result[key] = {}
 
       // load the html of the page in the $ variable
-      const $ = cheerio.load(html, { decodeEntities: true })
+      const $ = cheerio.load(html, { decodeEntities: false })
 
       // get all days of the week in days variable
-      const days = $('div.BJour')
+      const days = $('div.Jour')
 
       days.each(function (day, el) {
         const theDay = day
         const courses = $('div.Case')
-        const leftCss = parseFloat($(el).css('left')).toFixed(2)
+        const leftCss = Math.ceil(parseFloat($(el).css('left')).toFixed(1) + 100)
 
         // loop on each course of the week
         courses.each(function (course, el) {
           // if the course belongs to the day
-          if (parseFloat($(el).css('left')).toFixed(1) !== (parseFloat(parseFloat(leftCss) + 9.8)).toFixed(1)) if (parseFloat($(el).css('left')).toFixed(2) !== leftCss || !$('.TCJour').eq(course)) return
+
+          if (Math.floor(parseFloat($(el).css('left')).toFixed(1)) !== Math.floor((parseFloat(parseFloat(leftCss) + 9)).toFixed(1))) if (Math.ceil(parseFloat($(el).css('left')).toFixed(2)) !== leftCss || !$('.TCJour').eq(course)) return
 
           let day = $('.TCJour').eq(theDay)
-          day = day.html()
+          day = day.html().split(' ')
 
           // date
-          const dayDate = day.substr(day.length - 11, 2)
-          const dayMonth = dateTranslator.getMonth(day.substr(day.length - 8, 3))
-          const dayYear = day.substr(day.length - 4, 4)
-          const weekday = dateTranslator.getDayFromString(day)
-          const date = `${dayDate}/${dayMonth}/${dayYear}`
+          const dayDate = day[1]
+          const dayMonth = dateTranslator.getMonth(day[2])
+          const weekday = day[0].toLowerCase()
+          const year = '20' + dateScrap.split('/')[2]
+          const date = `${dayDate}/${dayMonth}/${year}`
 
           // time
-          const start = $(el).children('table').children('tbody').children('tr').children('td.TChdeb').html().substr(0, 5)
-          const end = $(el).children('table').children('tbody').children('tr').children('td.TChdeb').html().substr(8, 5)
+          const start = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TChdeb').html().substr(0, 5)
+          const end = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TChdeb').html().substr(8, 5)
 
           // other informations
-          const subject = $(el).children('table').children('tbody').children('tr').children('td.TCase').text()
-          let professor = $(el).children('table').children('tbody').children('tr').children('td.TCProf').html()
+          const subject = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCase').text()
+          let professor = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCProf').html()
           const bts = professor.includes('BTS')
-          professor = professor.split('<br>')[1]
-          const room = $(el).children('table').children('tbody').children('tr').children('td.TCSalle').html().replace(/Salle:/, '')
+          professor = professor.split('<br>')[0]
+          const room = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCSalle').html().replace(/Salle:/, '')
+
+          // presence
+          let presence
+          if ($(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCase').children('.Presence').html() === '<img src="/img/valide.png">' || $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCase').children('.Presence').html() === '') {
+            presence = true
+          } else {
+            presence = false
+          }
 
           const data = {
             date,
@@ -98,10 +107,10 @@ async function query (res, firstname, lastname, date) {
             professor,
             room,
             weekday,
-            bts
+            bts,
+            presence
           }
 
-          // push data in the response object
           if (result[key][weekday]) {
             result[key][weekday].push(data)
           } else {
