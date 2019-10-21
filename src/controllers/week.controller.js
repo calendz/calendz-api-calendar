@@ -49,7 +49,7 @@ async function query (res, firstname, lastname, dateScrap) {
         })
       }
       // init the response object
-      const result = {}
+      let result = {}
       const key = 'week'
       result[key] = {}
 
@@ -120,7 +120,42 @@ async function query (res, firstname, lastname, dateScrap) {
         })
       })
       // return response object
+      result = regroupCourses(result)
       resolve(result)
     })
   })
+}
+
+function regroupCourses (result) {
+  let response = {}
+  const key = 'week'
+  response[key] = {}
+
+  for (let [, courses] of Object.entries(result['week'])) {
+    for (let i = 0; i <= courses.length - 1; i++) {
+      if (courses[i + 1] !== undefined) {
+        if (courses[i].date === courses[i + 1].date && courses[i].subject === courses[i + 1].subject && courses[i].end === courses[i + 1].start && courses[i].professor === courses[i + 1].professor && courses[i].room === courses[i + 1].room && courses[i].weekday === courses[i + 1].weekday && courses[i].bts === courses[i + 1].bts) {
+          const course = courses[i]
+          course.end = courses[i + 1].end
+          response = pushCoursesUtil(response, key, course)
+          i++
+        } else {
+          response = pushCoursesUtil(response, key, courses[i])
+        }
+      } else {
+        response = pushCoursesUtil(response, key, courses[i])
+      }
+    }
+  }
+  return response
+}
+
+function pushCoursesUtil (response, key, course) {
+  if (response[key][course.weekday]) {
+    response[key][course.weekday].push(course)
+  } else {
+    response[key][course.weekday] = []
+    response[key][course.weekday].push(course)
+  }
+  return response
 }
