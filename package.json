@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/calendz/calendz-api-calendar#readme",
   "dependencies": {
+    "bluebird": "^3.7.1",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "compression": "^1.7.3",
