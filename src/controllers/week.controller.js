@@ -1,6 +1,7 @@
 const moment = require('moment')
 const request = require('request')
 const cheerio = require('cheerio')
+const redis = require('../config/redis')
 const logger = require('../config/winston')
 const dateTranslator = require('../utils/dateTranslator')
 
@@ -33,8 +34,40 @@ exports.getByDate = async (req, res) => {
   const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
 
   // execute the request
-  await query(res, _firstname, _lastname, date).then((result) => {
+  await query(res, _firstname, _lastname, date).then(async (result) => {
+    // if week is empty, don't store it
+    if (Object.entries(result.week).length === 0) return res.status(200).json(result)
+
+    // set value in cache (with TTL)
+    const translatedDate = dateTranslator.getWeekNumber(date)
+    const today = new Date()
+    const tomorrow = new Date().setDate(today.getDate() + 1)
+    const expireDate = new Date(tomorrow).setHours(3, 0, 0)
+    const expireIn = Math.abs((new Date(expireDate).getTime() - today.getTime()) / 1000)
+    await redis.hmset(`user:${_firstname}.${_lastname}`, `year:${translatedDate.year}|week:${translatedDate.number}`, JSON.stringify(result))
+    await redis.expire(`user:${_firstname}.${_lastname}`, expireIn)
+
+    // return result
     return res.status(200).json(result)
+  })
+}
+
+// get courses for a specific week from redis
+exports.getByDateFromCache = async (req, res, next) => {
+  // get firstname, lastname and date params for the request
+  const _firstname = req.query.firstname
+  const _lastname = req.query.lastname
+  const _date = req.params.date
+
+  // format the date with moment
+  const date = moment(_date, 'MM-DD-YY').format('MM/DD/YY')
+  const translatedDate = dateTranslator.getWeekNumber(date)
+
+  redis.hget(`user:${_firstname}.${_lastname}`, [`year:${translatedDate.year}|week:${translatedDate.number}`], (err, value) => {
+    if (err) logger.error(err)
+
+    if (value) return res.status(200).json(JSON.parse(value))
+    else return next()
   })
 }
 

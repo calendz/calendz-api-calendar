@@ -39,7 +39,7 @@ describe('./routes/week.route', () => {
     // make sure date is valid
     helper.testDate('/v1/week/eazeazeaze')
 
-    it('should success (200) : ok', (done) => {
+    it.skip('should success (200) : ok', (done) => {
       request(app).get('/v1/week/06-06-19').set(helper.defaultSetsWithAuth).expect('Content-Type', /json/)
         .query({ firstname: 'Arthur', lastname: 'Dufour' })
         .expect(200)

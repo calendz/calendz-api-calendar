@@ -30,6 +30,29 @@ const config = convict({
     arg: 'populate',
     env: 'POPULATE'
   },
+  redis: {
+    host: {
+      doc: 'The Redis hostname',
+      format: String,
+      default: '127.0.0.1',
+      arg: 'redis_host',
+      env: 'REDIS_HOST'
+    },
+    port: {
+      doc: 'The Redis port',
+      format: String,
+      default: '6379',
+      arg: 'redis_port',
+      env: 'REDIS_PORT'
+    },
+    password: {
+      doc: 'The Redis password',
+      format: String,
+      default: 'imasecret',
+      arg: 'redis_password',
+      env: 'REDIS_PASSWORD'
+    }
+  },
   db: {
     host: {
       doc: 'The MongoDB hostname',
