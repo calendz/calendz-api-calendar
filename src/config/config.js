@@ -44,6 +44,13 @@ const config = convict({
       default: '6379',
       arg: 'redis_port',
       env: 'REDIS_PORT'
+    },
+    password: {
+      doc: 'The Redis password',
+      format: String,
+      default: 'imasecret',
+      arg: 'redis_password',
+      env: 'REDIS_PASSWORD'
     }
   },
   db: {

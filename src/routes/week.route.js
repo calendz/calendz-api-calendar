@@ -18,6 +18,7 @@ router.get('/:date', [
   AuthValidationMiddleware.validTokenNeeded,
   UserValidationMiddleware.hasFirstnameAndLastname,
   DateValidationMiddleware.hasValidDate,
+  WeekController.getByDateFromCache,
   WeekController.getByDate
 ])
 
