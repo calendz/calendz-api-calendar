@@ -4,7 +4,6 @@ const app = require('./config/express')
 const initMongo = require('./config/mongoose')
 const redis = require('./config/redis')
 const seedData = require('./mock/seedData')
-const cronScrap = require('./cron-jobs/scrap')
 
 // if running unit tests, disable logs
 if (config.node_env === 'test') {
@@ -35,11 +34,6 @@ redis.on('connect', () => {
       logger.info(`App started in ${config.node_env.toUpperCase()} mode.`)
       logger.info(`Server started on http://localhost:${port}.`)
     })
-
-    /* istanbul ignore if */
-    if (config.scrapping) {
-      cronScrap.initScrap()
-    }
   })
 })
 
