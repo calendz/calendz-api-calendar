@@ -21,7 +21,7 @@ if (config.node_env === 'development') {
   app.use(morgan('dev', { stream: { write: message => logger.info(message.trim()) } }))
 } else if (config.node_env === 'production') {
   /* istanbul ignore next */
-  app.use(morgan('combined', {
+  app.use(morgan('tiny', {
     stream: { write: message => logger.info(message.trim()) },
     skip: (req, res) => req.originalUrl === '/v1/health-check'
   }))
