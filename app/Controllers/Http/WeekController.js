@@ -14,7 +14,7 @@ class WeekController {
     const payload = request.only(['firstname', 'lastname'])
 
     // get current date and format with moment
-    const date = moment(new Date(), 'MM/DD/YYYY')
+    const date = moment(new Date()).format('MM/DD/YYYY')
 
     const result = await Scrapper.fetchWeek(payload.firstname, payload.lastname, date)
       .catch(() => {
