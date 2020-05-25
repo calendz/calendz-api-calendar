@@ -38,6 +38,7 @@
     "@adonisjs/http-logger": "^1.0.0",
     "@adonisjs/ignitor": "^2.0.8",
     "@adonisjs/lucid": "^6.1.3",
+    "@adonisjs/redis": "^2.0.7",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
     "cheerio": "^1.0.0-rc.3"
