@@ -107,6 +107,14 @@ class DateUtils {
     // return true if date is valid
     return date1 === `${mm}/${dd}/${yy}`
   }
+
+  computeExpireMidnight () {
+    const today = new Date()
+    const tomorrow = new Date().setDate(today.getDate() + 1)
+    const expireDate = new Date(tomorrow).setHours(3, 0, 0)
+    const expireIn = Math.abs((new Date(expireDate).getTime() - today.getTime()) / 1000)
+    return expireIn
+  }
 }
 
 module.exports = DateUtils
