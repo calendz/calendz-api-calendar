@@ -12,6 +12,7 @@
 
 // Uncomment when want to run migrations
 // const ace = require('@adonisjs/ace')
+const Redis = use('Redis')
 
 module.exports = (cli, runner) => {
   runner.before(async () => {
@@ -36,6 +37,9 @@ module.exports = (cli, runner) => {
     */
     // await ace.call('migration:run', {}, { silent: true })
     // await ace.call('seed')
+
+    // empty redis
+    await Redis.flushall()
   })
 
   runner.after(async () => {
