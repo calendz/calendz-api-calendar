@@ -26,10 +26,9 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
 
 | Librairie        | Version    | Description                                                                                      |
 | ---------------- | ---------- | ------------------------------------------------------------------------------------------------ |
-| [Node.js]        | 10.15.3    | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.                         |
-| [Express]        | 4.17.1     | Fast, unopinionated, minimalist web framework for Node.js                                        |
-| [Cheerio]        | 1.0.0-rc.2 | Fast, flexible, and lean implementation of core jQuery designed specifically for the server.     |
-| [JsonWebToken]   | 8.5.1      | Industry standard RFC 7519 method for representing claims securely between two parties.          |
+| [Node.js]        | 12.16.0    | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.                         |
+| [Adonis.js]      | 4.1        | The Node.js Framework highly focused on developer ergonomics, stability and confidence.          |
+| [Cheerio]        | 1.0.0-rc.3 | Fast, flexible, and lean implementation of core jQuery designed specifically for the server.     |
 
 **(Liste non exhaustive, uniquement les librairies principales sont présentées)*
 
@@ -37,29 +36,34 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
 
 ### Pré-requis
 
-* Installer Node 10.15.3
+* Installer Node 12.16.0
 * Créer un fichier `.env` à la source de ce repository contenant les valeurs suivantes (modifiables selon vos besoins)
 
       NODE_ENV=development
 
-      APP_PORT=3000
+      HOST=0.0.0.0
+      PORT=3333
 
-      SCRAPPING=true
+      APP_NAME=calendz-api-calendar
+      APP_URL=http://${HOST}:${PORT}
+      # Please generate a new key: 
+      # > $ adonis key:generate
+      APP_KEY=
 
-      DB_HOST=calendz-database
-      DB_PORT=27017
-      DB_NAME=calendz
-      DB_USER=username
-      DB_PASSWORD=password
+      REDIS_HOST=calendz-redis
+      REDIS_PORT=6379
+      REDIS_PASSWORD=password
+
 
 ### Lancement
 
-* Lint : `npm run lint` (corrige la syntaxe du code grâce à [ESLint](https://github.com/eslint/eslint))
+* Lint : `npm run lint` (analyse la syntaxe du code grâce à [ESLint](https://github.com/eslint/eslint))
+* Lint : `npm run lint:fix` (corrige la syntaxe du code grâce à [ESLint](https://github.com/eslint/eslint))
 * Tests : `npm run test` (lance les tests effectués lors de l'intégration continue)
+* Tests : `npm run test:coverage` (calcule la couverture des tests (et génère un rapport html))
 * Production : `npm run start` (lance via node, aucun process manager n'est inclus par défaut)
-* Développement : `npm run dev` (lance avec [nodemon](https://nodemon.io/))
+* Développement : `npm run dev` (lance en environnement de développement avec hot-reloading)
 
 [Node.js]: https://github.com/nodejs/node
-[Express]: https://github.com/expressjs/express
-[Cheerio]: https://github.com/Automattic/mongoose/
-[JsonWebToken]: https://github.com/auth0/node-jsonwebtoken
+[Adonis.js]: https://github.com/adonisjs
+[Cheerio]: https://github.com/cheeriojs/cheerio

@@ -4,7 +4,10 @@ notifications:
   email: false
 
 node_js:
-  - "10.15.3"
+  - "12.16.0"
+
+services:
+  - redis
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_d810adeb7664_key -iv $encrypted_d810adeb7664_iv
@@ -14,6 +17,7 @@ install: npm install
 
 jobs:
   include:
+    # Run all tasks
     - stage: Tests
       if: |
         branch = develop AND \

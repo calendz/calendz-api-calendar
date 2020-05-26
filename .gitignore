@@ -1,15 +1,21 @@
 # editor configuration
 .vscode/
+.idea/
 
-# app dependencies
-node_modules/
+# Node modules
+node_modules
 
-# config
+# Adonis directory for storing tmp files
+tmp
+
+# Environment variables, never commit this file
 .env
+.env.dev
+.env.prod
 
-# coverage
-coverage/
+# Code coverage
 .nyc_output/
+coverage/
 
 # ssh key for deployment
 deploy_key
