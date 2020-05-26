@@ -50,6 +50,10 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
       # > $ adonis key:generate
       APP_KEY=
 
+      REDIS_HOST=calendz-redis
+      REDIS_PORT=6379
+      REDIS_PASSWORD=password
+
 
 ### Lancement
 
