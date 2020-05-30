@@ -29,6 +29,7 @@ module.exports = {
   appKey: Env.getOrFail('APP_KEY'),
 
   http: {
+    loggerEnv: ['development', 'production'],
     /*
     |--------------------------------------------------------------------------
     | Allow Method Spoofing
