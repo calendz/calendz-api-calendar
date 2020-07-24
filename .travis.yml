@@ -7,7 +7,7 @@ node_js:
   - "12.16.0"
 
 services:
-  - redis
+  - redis-server
   
 before_script:
   - cp -a .env.example .env
