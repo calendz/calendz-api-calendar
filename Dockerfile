@@ -1,5 +1,5 @@
-# Node LTS 12.16.0 on alpine
-FROM node:12.16.0-alpine
+# Node LTS 12.18.2 on alpine
+FROM node:12.18.2-alpine
 LABEL maintainer="Calendz. <https://calendz.app/>"
 
 # creates a directory for the app
