@@ -19,6 +19,7 @@ const providers = [
   '@adonisjs/http-logger/providers/LoggerProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
   '@adonisjs/redis/providers/RedisProvider',
+  path.join(__dirname, '..', 'providers', 'Cache/Provider'),
   path.join(__dirname, '..', 'providers', 'Scrapper/Provider'),
   path.join(__dirname, '..', 'providers', 'DateUtils/Provider')
 ]
