@@ -40,6 +40,16 @@ test('should return the day\'s courses from redis (cached)', async ({ client, as
   response.assertStatus(200)
 }).timeout(50)
 
+test('should return the day\'s courses without cache (ignoreCache)', async ({ client, assert }) => {
+  const response = await client
+    .get('/v1/day?ignoreCache=true')
+    .send(data)
+    .end()
+
+  assert.property(response.body, 'courses')
+  response.assertStatus(200)
+}).timeout(0)
+
 // ===============================================================
 // == GET /v1/day/:date
 // ===============================================================
@@ -79,3 +89,13 @@ test('should return the day\'s courses from redis (cached)', async ({ client, as
   assert.property(response.body, 'courses')
   response.assertStatus(200)
 }).timeout(50)
+
+test('should return the day\'s courses without cache (ignoreCache)', async ({ client, assert }) => {
+  const response = await client
+    .get('/v1/day/05-25-2020?ignoreCache=true')
+    .send(data)
+    .end()
+
+  assert.property(response.body, 'courses')
+  response.assertStatus(200)
+}).timeout(0)
