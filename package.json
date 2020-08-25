@@ -44,7 +44,7 @@
     "cheerio": "^1.0.0-rc.3"
   },
   "devDependencies": {
-    "commitizen": "^4.1.2",
+    "commitizen": "^4.2.0",
     "coveralls": "^3.1.0",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.5.0",
