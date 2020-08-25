@@ -7,7 +7,7 @@ ssh-add .travis/deploy_key # Add the private key to SSH
 ssh -o "StrictHostKeyChecking=no" $SSH_USER@$SSH_IP -p $SSH_PORT <<EOF
   cd /home/calendz/calendz-conf
   git pull
-  docker pull calendz/api-calendar:latest
+  docker pull calendz/api-calendar:current
   docker-compose -f docker/docker-compose.prod.yml stop calendz-api-calendar
   docker-compose -f docker/docker-compose.prod.yml rm -f calendz-api-calendar
   docker-compose -f docker/docker-compose.prod.yml up -d --no-deps --build calendz-api-calendar

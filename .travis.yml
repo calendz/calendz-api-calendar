@@ -39,7 +39,7 @@ jobs:
         - chmod +x send.sh
         - ./send.sh failure $DISCORD_WEBHOOK_URL
 
-    # Build and push both current version & latest version
+    # Build and push both versionned and current versions
     - stage: Build Docker image
       if: branch = master
       script:
@@ -48,9 +48,9 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t calendz/api-calendar .
       - docker images
-      - docker tag calendz/api-calendar calendz/api-calendar:latest
+      - docker tag calendz/api-calendar calendz/api-calendar:current
       - docker tag calendz/api-calendar calendz/api-calendar:${PACKAGE_VERSION}
-      - docker push calendz/api-calendar:latest
+      - docker push calendz/api-calendar:current
       - docker push calendz/api-calendar:${PACKAGE_VERSION}
 
     # Deploy latest API-CALENDAR version
