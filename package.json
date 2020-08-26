@@ -1,78 +1,72 @@
 {
   "name": "calendz-api-calendar",
-  "version": "1.0.1",
   "description": "API wrapper for EPSI's agenda",
+  "author": "Calendz",
+  "license": "ISC",
   "private": true,
-  "main": "app.js",
+  "version": "2.0.0",
+  "adonis-version": "4.1.0",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "./node_modules/.bin/nodemon ./src/app.js",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha ./src/tests --recursive --timeout 15000 --exit",
-    "test:coverage": "NODE_ENV=test nyc --reporter=html --reporter=text -x '**/tests/*' ./node_modules/.bin/mocha ./src/tests --recursive --timeout 15000 --exit",
-    "test:coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "start": "node server.js",
+    "dev": "./node_modules/.bin/adonis serve --dev",
+    "test": "node ace test",
+    "test:coverage": "./node_modules/.bin/nyc --reporter=html --reporter=text-summary node ace test",
+    "test:coveralls": "./node_modules/.bin/nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/.bin/eslint ./",
     "lint:fix": "./node_modules/.bin/eslint ./ --fix"
   },
+  "keywords": [
+    "calendz",
+    "calendz-api-calendar"
+  ],
+  "homepage": "https://github.com/calendz/calendz-api-calendar#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calendz/calendz-api-calendar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/calendz/calendz-api-calendar/issues"
+  },
+  "dependencies": {
+    "@adonisjs/ace": "^5.0.8",
+    "@adonisjs/auth": "^3.0.7",
+    "@adonisjs/bodyparser": "^2.0.5",
+    "@adonisjs/cors": "^1.0.7",
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/framework": "^5.0.9",
+    "@adonisjs/http-logger": "^1.0.0",
+    "@adonisjs/ignitor": "^2.0.8",
+    "@adonisjs/lucid": "^6.2.0",
+    "@adonisjs/redis": "^2.0.7",
+    "@adonisjs/validator": "^5.0.6",
+    "@adonisjs/vow": "^1.0.17",
+    "cheerio": "^1.0.0-rc.3"
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.0",
+    "coveralls": "^3.1.0",
+    "cz-conventional-changelog": "^3.2.1",
+    "eslint": "^7.7.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
+    "nyc": "^15.1.0"
+  },
+  "autoload": {
+    "App": "./app"
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && npm run lint"
+      "pre-commit": "npm run lint && npm run test"
     }
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/calendz/calendz-api-calendar.git"
-  },
-  "keywords": [],
-  "author": "calendz",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/calendz/calendz-api-calendar/issues"
-  },
-  "homepage": "https://github.com/calendz/calendz-api-calendar#readme",
-  "dependencies": {
-    "bluebird": "^3.7.1",
-    "body-parser": "^1.18.3",
-    "cheerio": "^1.0.0-rc.2",
-    "compression": "^1.7.3",
-    "convict": "^5.0.0",
-    "cors": "^2.8.5",
-    "debug": "^4.1.1",
-    "dotenv": "^8.0.0",
-    "express": "^4.16.4",
-    "express-async-handler": "^1.1.4",
-    "faker": "^4.1.0",
-    "helmet": "^3.15.1",
-    "method-override": "^3.0.0",
-    "moment": "^2.24.0",
-    "mongoose": "^5.7.5",
-    "morgan": "^1.9.1",
-    "multer": "^1.4.1",
-    "redis": "^2.8.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "commitizen": "^4.0.3",
-    "coveralls": "^3.0.4",
-    "cz-conventional-changelog": "^3.0.2",
-    "eslint": "^6.0.1",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-mocha": "^5.3.0",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "husky": "^3.0.4",
-    "mocha": "^6.1.4",
-    "nodemon": "^1.18.10",
-    "nyc": "^14.1.1",
-    "supertest": "^4.0.2"
   }
 }
