@@ -26,7 +26,7 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
 
 | Librairie        | Version    | Description                                                                                      |
 | ---------------- | ---------- | ------------------------------------------------------------------------------------------------ |
-| [Node.js]        | 12.16.0    | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.                         |
+| [Node.js]        | 12.18.3    | Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.                         |
 | [Adonis.js]      | 4.1        | The Node.js Framework highly focused on developer ergonomics, stability and confidence.          |
 | [Cheerio]        | 1.0.0-rc.3 | Fast, flexible, and lean implementation of core jQuery designed specifically for the server.     |
 
@@ -36,7 +36,7 @@ L'API de calendz est développée avec les frameworks et outils suivants* :
 
 ### Pré-requis
 
-* Installer Node 12.16.0
+* Installer Node 12.18.3
 * Créer un fichier `.env` à la source de ce repository contenant les valeurs suivantes (modifiables selon vos besoins)
 
       NODE_ENV=development
