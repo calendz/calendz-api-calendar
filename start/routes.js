@@ -24,6 +24,7 @@ Route.group(() => {
   // Get with current date
   Route.get('/day', 'DayController.getCurrent').validator('RequireName')
   Route.get('/week', 'WeekController.getCurrent').validator('RequireName')
+  Route.get('/month', 'MonthController.getCurrent').validator('RequireName')
 
   // Get with specific date
   Route.get('/day/:date', 'DayController.getByDate').validator('RequireName')
