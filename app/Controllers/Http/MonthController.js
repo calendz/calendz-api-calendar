@@ -3,9 +3,7 @@
 const moment = require('moment')
 const Cache = use('Cache')
 const Scrapper = use('Scrapper')
-const DateUtils = use('DateUtils')
 const ScrappingException = use('App/Exceptions/ScrappingException')
-const InvalidDateException = use('App/Exceptions/InvalidDateException')
 
 const numberOfWeekByMonth = 4
 
@@ -16,10 +14,9 @@ class MonthController {
   async getCurrent ({ request }) {
     const { firstname, lastname, ignoreCache } = request.only(['firstname', 'lastname', 'ignoreCache'])
 
-    let result = []
+    const result = []
 
     for (let i = 0; i < numberOfWeekByMonth; i++) {
-
       // get current date and format with moment
       const date = moment(new Date()).add(i, 'M').format('MM/DD/YYYY')
 
@@ -31,10 +28,10 @@ class MonthController {
         } else {
           // if not cached, scrap it
           const data = await Scrapper.fetchWeek(firstname, lastname, date)
-          .catch(() => {
+            .catch(() => {
             /* istanbul ignore next */
-            throw new ScrappingException()
-          })
+              throw new ScrappingException()
+            })
 
           result.push(data)
 
@@ -42,9 +39,7 @@ class MonthController {
           await Cache.setWeek(firstname, lastname, date, data)
         }
       }
-
     }
-
 
     return result
   }
