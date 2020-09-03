@@ -4,10 +4,12 @@ const ical = require('ical-generator')
 const moment = require('moment')
 
 class ConvertIcal {
-  async handle ({ response }, next) {
+  async handle ({ response, request }, next) {
     await next()
 
-    if (response.request.headers.accept === 'text/calendar') {
+    const format = request.input('format')
+
+    if (format === 'icalendar') {
       const cal = ical()
 
       const events = findValuesHelper(response._lazyBody, 'date', [])
@@ -23,6 +25,7 @@ class ConvertIcal {
       })
 
       response._lazyBody.content = cal.toString()
+      response.safeHeader('Content-type', 'text/calendar')
     }
   }
 }
