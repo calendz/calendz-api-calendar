@@ -99,3 +99,33 @@ test('should return the week\'s courses without cache (ignoreCache)', async ({ c
   assert.property(response.body, 'week')
   response.assertStatus(200)
 }).timeout(0)
+
+// ===============================================================
+// == GET /v1/week/:date/update
+// ===============================================================
+
+test('should test that firstname is required', async ({ client }) => {
+  await testRequireField('firstname', data, '/v1/week/05-25-2020/update', client)
+})
+
+test('should test that lastname is required', async ({ client }) => {
+  await testRequireField('lastname', data, '/v1/week/05-25-2020/update', client)
+})
+
+test('should test that date is invalid', async ({ client }) => {
+  await testInvalidDate(data, '/v1/week/invalid-date/update', client)
+})
+
+test('should test that date is invalid', async ({ client }) => {
+  await testInvalidDate(data, '/v1/week/13-05-2020/update', client)
+})
+
+test('should return the week\'s courses', async ({ client, assert }) => {
+  const response = await client
+    .get('/v1/week/04-25-2020/update')
+    .send(data)
+    .end()
+
+  assert.property(response.body, 'update')
+  response.assertStatus(200)
+}).timeout(0)
