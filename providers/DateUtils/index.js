@@ -115,6 +115,15 @@ class DateUtils {
     const expireIn = Math.abs((new Date(expireDate).getTime() - today.getTime()) / 1000)
     return expireIn
   }
+
+  computeExpireFriday () {
+    const temp = new Date()
+    const today = new Date()
+    const friday = temp.setDate(today.getDate() + (7 + 5 - today.getDay()) % 7)
+    const expireDate = new Date(friday).setHours(4, 0, 0)
+    const expireIn = Math.abs((new Date(expireDate).getTime() - today.getTime()) / 1000)
+    return expireIn
+  }
 }
 
 module.exports = DateUtils

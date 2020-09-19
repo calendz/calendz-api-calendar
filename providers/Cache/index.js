@@ -18,8 +18,11 @@ class Cache {
    */
   async setWeek (firstname, lastname, date, data) {
     const translatedDate = DateUtils.getWeekNumber(date)
-    const expireIn = DateUtils.computeExpireMidnight()
-    await Redis.hmset(`u:${firstname}.${lastname}`, `y:${translatedDate.year}|w:${translatedDate.number}`, JSON.stringify(data))
+    const expireIn = DateUtils.computeExpireFriday()
+    await Redis.hmset(
+      `u:${firstname}.${lastname}`, `y:${translatedDate.year}|w:${translatedDate.number}`,
+      JSON.stringify({ ...data, weekNumber: translatedDate.number })
+    )
     await Redis.expire(`u:${firstname}.${lastname}`, expireIn)
   }
 
@@ -38,6 +41,31 @@ class Cache {
     const expireIn = DateUtils.computeExpireMidnight()
     await Redis.hmset(`u:${firstname}.${lastname}`, `d:${date}`, JSON.stringify(data))
     await Redis.expire(`u:${firstname}.${lastname}`, expireIn)
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Background actualization
+  |--------------------------------------------------------------------------
+  */
+
+  /**
+   * Indicate that requested date has already been scrapped today
+   */
+  async setIsDailyScrapped (firstname, lastname, date) {
+    const translatedDate = DateUtils.getWeekNumber(date)
+    const expireIn = DateUtils.computeExpireMidnight()
+    await Redis.hmset(`u:${firstname}.${lastname}|daily`, `y:${translatedDate.year}|w:${translatedDate.number}`, 'true')
+    await Redis.expire(`u:${firstname}.${lastname}|daily`, expireIn)
+  }
+
+  /**
+   * Check if date has already been scrapped today
+   */
+  async getIsDailyScrapped (firstname, lastname, date) {
+    const translatedDate = DateUtils.getWeekNumber(date)
+    const result = await Redis.hget(`u:${firstname}.${lastname}|daily`, [`y:${translatedDate.year}|w:${translatedDate.number}`])
+    return result || false
   }
 }
 

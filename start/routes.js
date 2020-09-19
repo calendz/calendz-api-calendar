@@ -28,4 +28,7 @@ Route.group(() => {
   // Get with specific date
   Route.get('/day/:date', 'DayController.getByDate').validator('RequireName')
   Route.get('/week/:date', 'WeekController.getByDate').validator('RequireName')
+
+  // Routes use by Calendz for background actualization
+  Route.get('/week/:date/update', 'WeekController.updateByDate').validator('RequireName')
 }).prefix('/v1')
