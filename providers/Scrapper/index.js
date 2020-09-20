@@ -8,17 +8,33 @@ const dateUtils = use('DateUtils')
 
 class Scrapper {
   /**
-   * Get week courses of a given date for a given student
-   */
+   | --------------------------------------------------------------
+   | Get week courses of a given date for a given student
+   | --------------------------------------------------------------
+  */
+
   async fetchWeek (firstname, lastname, queriedDate) {
+    let result = null
+    let success = false
+
+    while (!success) {
+      result = await this.scrapWeek(firstname, lastname, queriedDate)
+        .then((res) => { success = true; return res })
+        .catch((err) => { if (err.message !== 'E_SCRAPPING_PARAMETERS') success = true })
+    }
+
+    return result
+  }
+
+  async scrapWeek (firstname, lastname, queriedDate) {
     return new Promise((resolve, reject) => {
       const CALENDAR_URL_TO_SCRAP = 'https://edtmobiliteng.wigorservices.net//WebPsDyn.aspx?action=posEDTBEECOME&serverid=i'
 
       request(`${CALENDAR_URL_TO_SCRAP}&Tel=${firstname}.${lastname}&date=${queriedDate}`, (err, resp, html) => {
         /* istanbul ignore if */
-        if (err || !html || resp.statusCode !== 200) {
-          return reject(new Error('An error has occurred whilst trying to scrape the agenda'))
-        }
+        if (err || !html || resp.statusCode !== 200) return reject(new Error('An error has occurred whilst trying to scrape the agenda'))
+        /* istanbul ignore if */
+        if (html.includes('Erreur de parametres')) return reject(new Error('E_SCRAPPING_PARAMETERS'))
 
         // init the response object
         let result = {}
@@ -72,17 +88,7 @@ class Scrapper {
               presence = false
             }
 
-            const data = {
-              date,
-              subject,
-              start,
-              end,
-              professor,
-              room,
-              weekday,
-              bts,
-              presence
-            }
+            const data = { date, subject, start, end, professor, room, weekday, bts, presence }
 
             if (result[key][weekday]) {
               result[key][weekday].push(data)
@@ -92,6 +98,7 @@ class Scrapper {
             }
           })
         })
+
         // return response object
         result = regroupCourses(result)
         resolve(result)
@@ -100,9 +107,25 @@ class Scrapper {
   }
 
   /**
-   * Get day courses of a given date for a given student
-   */
-  async fetchDay (firstname, lastname, date) {
+   | --------------------------------------------------------------
+   | Get day courses of a given date for a given student
+   | --------------------------------------------------------------
+  */
+
+  async fetchDay (firstname, lastname, queriedDate) {
+    let result = null
+    let success = false
+
+    while (!success) {
+      result = await this.scrapDay(firstname, lastname, queriedDate)
+        .then((res) => { success = true; return res })
+        .catch((err) => { if (err.message !== 'E_SCRAPPING_PARAMETERS') success = true })
+    }
+
+    return result
+  }
+
+  async scrapDay (firstname, lastname, date) {
     return new Promise((resolve, reject) => {
       const CALENDAR_URL_TO_SCRAP = 'http://edtmobilite.wigorservices.net/WebPsDyn.aspx?Action=posETUD&serverid=i'
 
@@ -131,15 +154,7 @@ class Scrapper {
           const room = $(el).children('div.Salle').text()
           const weekday = dateUtils.getDayFromInt(moment(date, 'MM/DD/YY').day())
 
-          const data = {
-            date,
-            subject,
-            start,
-            end,
-            professor,
-            room,
-            weekday
-          }
+          const data = { date, subject, start, end, professor, room, weekday }
 
           // push the data in the response object
           result[key].push(data)
