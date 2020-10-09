@@ -164,6 +164,54 @@ class Scrapper {
       })
     })
   }
+
+  /**
+   | --------------------------------------------------------------
+   | Get Microsoft Teams current links
+   | --------------------------------------------------------------
+  */
+
+  async fetchTeamsLinks (firstname, lastname) {
+    // get current date and format with moment
+    const date = moment(new Date()).format('MM/DD/YYYY')
+
+    return new Promise((resolve, reject) => {
+      const CALENDAR_URL_TO_SCRAP = 'https://edtmobiliteng.wigorservices.net//WebPsDyn.aspx?action=posEDTBEECOME&serverid=i'
+
+      request(`${CALENDAR_URL_TO_SCRAP}&Tel=${firstname}.${lastname}&date=${date}`, (err, resp, html) => {
+        /* istanbul ignore if */
+        if (err || !html || resp.statusCode !== 200) return reject(new Error('An error has occurred whilst trying to scrape the agenda'))
+        /* istanbul ignore if */
+        if (html.includes('Erreur de parametres')) return reject(new Error('E_SCRAPPING_PARAMETERS'))
+
+        // init the response object
+        const result = []
+
+        // load the html of the page in the $ variable
+        const $ = cheerio.load(html, { decodeEntities: false })
+
+        $('div.Teams').each((i, el) => {
+          $(el).children('a').each((i, el) => {
+            const subject = $(el).parent().parent().text()
+            const link = $(el).attr('href')
+            const start = $(el).parent().parent().parent().parent().children('tr').children('td.TChdeb').html().substr(0, 5)
+            const end = $(el).parent().parent().parent().parent().children('tr').children('td.TChdeb').html().substr(8, 5)
+
+            // add subject if it doesn't exist
+            const index = result.findIndex(el => el.subject === subject && el.start === start && el.end === end)
+            if (index === -1) {
+              result.push({ subject, start, end, links: [link] })
+            } else {
+              result[index].links.push(link)
+            }
+          })
+        })
+
+        // return response object
+        resolve(result)
+      })
+    })
+  }
 }
 
 function regroupCourses (result) {

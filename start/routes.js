@@ -30,6 +30,9 @@ Route.group(() => {
   Route.get('/day/:date', 'DayController.getByDate').validator('RequireName')
   Route.get('/week/:date', 'WeekController.getByDate').validator('RequireName')
 
-  // Routes use by Calendz for background actualization
+  // Get Microsoft Teams current links
+  Route.get('/teams', 'TeamsController.get').validator('RequireName')
+
+  // Route used by Calendz for background actualization
   Route.get('/week/:date/update', 'WeekController.updateByDate').validator('RequireName')
 }).prefix('/v1')
