@@ -5,7 +5,7 @@ const Cache = use('Cache')
 const Scrapper = use('Scrapper')
 const ScrappingException = use('App/Exceptions/ScrappingException')
 
-const numberOfWeekByMonth = 5
+const numberOfWeekByMonth = 4
 
 class MonthController {
   /**
