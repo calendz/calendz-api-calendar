@@ -4,7 +4,7 @@
   "author": "Calendz",
   "license": "ISC",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.1.0",
   "adonis-version": "4.1.0",
   "main": "index.js",
   "scripts": {
@@ -37,23 +37,24 @@
     "@adonisjs/framework": "^5.0.9",
     "@adonisjs/http-logger": "^1.0.0",
     "@adonisjs/ignitor": "^2.0.8",
-    "@adonisjs/lucid": "^6.2.0",
+    "@adonisjs/lucid": "^6.2.1",
     "@adonisjs/redis": "^2.0.7",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
-    "cheerio": "^1.0.0-rc.3"
+    "cheerio": "^1.0.0-rc.3",
+    "ical-generator": "^1.15.1"
   },
   "devDependencies": {
-    "commitizen": "^4.2.0",
+    "commitizen": "^4.2.1",
     "coveralls": "^3.1.0",
-    "cz-conventional-changelog": "^3.2.1",
-    "eslint": "^7.7.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.11.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5",
+    "husky": "^4.3.0",
     "nyc": "^15.1.0"
   },
   "autoload": {

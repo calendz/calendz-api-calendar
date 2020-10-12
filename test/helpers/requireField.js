@@ -4,6 +4,7 @@ module.exports = async function testRequireField (field, data, endpoint, client)
   const response = await client
     .get(endpoint)
     .send(omit(data, field))
+    .header('accept', 'application/json')
     .end()
 
   response.assertStatus(400)
