@@ -2,7 +2,7 @@
 'use strict'
 
 const ical = require('ical-generator')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 class ConvertIcal {
   async handle ({ response, request }, next) {
@@ -17,8 +17,8 @@ class ConvertIcal {
 
       events.forEach(event => {
         cal.createEvent({
-          start: moment(event.date + ' ' + event.start, 'DD/MM/YYYY hh:mm').toDate(),
-          end: moment(event.date + ' ' + event.end, 'DD/MM/YYYY hh:mm').toDate(),
+          start: moment(event.date + ' ' + event.start, 'DD/MM/YYYY hh:mm').tz('Europe/Paris').toDate(),
+          end: moment(event.date + ' ' + event.end, 'DD/MM/YYYY hh:mm').tz('Europe/Paris').toDate(),
           summary: event.subject,
           description: event.professor,
           location: event.room
