@@ -11,14 +11,14 @@ class ConvertIcal {
     const format = request.input('format')
 
     if (format === 'icalendar') {
-      const cal = ical()
+      const cal = ical({ name: 'Calendz - Cours', timezone: 'Europe/Paris' })
 
       const events = findValuesHelper(response._lazyBody, 'date', [])
 
       events.forEach(event => {
         cal.createEvent({
-          start: moment(event.date + ' ' + event.start, 'DD/MM/YYYY hh:mm').tz('Europe/Paris').toDate(),
-          end: moment(event.date + ' ' + event.end, 'DD/MM/YYYY hh:mm').tz('Europe/Paris').toDate(),
+          start: moment.tz(event.date + ' ' + event.start, 'DD/MM/YYYY hh:mm', 'Europe/Paris'),
+          end: moment.tz(event.date + ' ' + event.end, 'DD/MM/YYYY hh:mm', 'Europe/Paris'),
           summary: event.subject,
           description: event.professor,
           location: event.room
