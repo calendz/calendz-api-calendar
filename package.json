@@ -42,7 +42,7 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
     "cheerio": "^1.0.0-rc.3",
-    "ical-generator": "^1.15.1",
+    "ical-generator": "^1.15.2",
     "moment-timezone": "^0.5.31"
   },
   "devDependencies": {
