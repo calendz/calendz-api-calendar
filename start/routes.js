@@ -22,12 +22,10 @@ Route.get('/', () => ({ version: packageJson.version, uptime: process.uptime() }
 // Parsing calendar
 Route.group(() => {
   // Get with current date
-  Route.get('/day', 'DayController.getCurrent').validator('RequireName')
   Route.get('/week', 'WeekController.getCurrent').validator('RequireName')
   Route.get('/month', 'MonthController.getCurrent').validator('RequireName')
 
   // Get with specific date
-  Route.get('/day/:date', 'DayController.getByDate').validator('RequireName')
   Route.get('/week/:date', 'WeekController.getByDate').validator('RequireName')
 
   // Get Microsoft Teams current links
