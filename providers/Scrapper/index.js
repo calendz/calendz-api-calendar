@@ -78,6 +78,7 @@ class Scrapper {
             const bts = professor.includes('BTS')
             professor = professor.split('<br>')[0]
             const room = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCSalle').html().replace(/Salle:/, '')
+            const remote = subject.toLowerCase().includes('distanciel') || room.toLowerCase().includes('distanciel')
 
             // presence
             let presence
@@ -88,7 +89,7 @@ class Scrapper {
               presence = false
             }
 
-            const data = { date, subject, start, end, professor, room, weekday, bts, presence }
+            const data = { date, subject, start, end, professor, room, weekday, bts, remote, presence }
 
             if (result[key][weekday]) {
               result[key][weekday].push(data)

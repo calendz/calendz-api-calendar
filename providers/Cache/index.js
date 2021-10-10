@@ -26,23 +26,6 @@ class Cache {
     await Redis.expire(`u:${firstname}.${lastname}`, expireIn)
   }
 
-  /**
-   * Retrieve day from cache
-   */
-  async getDay (firstname, lastname, date) {
-    const result = await Redis.hget(`u:${firstname}.${lastname}`, [`d:${date}`])
-    return JSON.parse(result)
-  }
-
-  /**
-   * Set day in cache, and make it auto-expire
-   */
-  async setDay (firstname, lastname, date, data) {
-    const expireIn = DateUtils.computeExpireMidnight()
-    await Redis.hmset(`u:${firstname}.${lastname}`, `d:${date}`, JSON.stringify(data))
-    await Redis.expire(`u:${firstname}.${lastname}`, expireIn)
-  }
-
   /*
   |--------------------------------------------------------------------------
   | Background actualization
