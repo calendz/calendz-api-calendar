@@ -4,7 +4,7 @@ const { LogicalException } = require('@adonisjs/generic-exceptions')
 
 const code = 'E_INVALID_DATE'
 const status = 412
-const message = 'Date is invalid. Please use DD/MM/YY format.'
+const message = 'Date is invalid. Please use MM-DD-YY format.'
 
 class InvalidDateException extends LogicalException {
   constructor () {
