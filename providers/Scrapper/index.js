@@ -89,7 +89,9 @@ class Scrapper {
               presence = false
             }
 
-            const data = { date, subject, start, end, professor, room, weekday, bts, remote, presence }
+            const link = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCase').children('.Teams').first().children('a').attr('href')
+
+            const data = { date, subject, start, end, professor, room, weekday, bts, remote, link, presence }
 
             if (result[key][weekday]) {
               result[key][weekday].push(data)
