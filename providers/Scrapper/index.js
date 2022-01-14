@@ -76,7 +76,7 @@ class Scrapper {
             const subject = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCase').text()
             let professor = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCProf').html()
             const bts = professor.includes('BTS')
-            professor = professor.split('<br>')[0]
+            professor = professor.split('<br>')[0].split('</span>')[1]
             const room = $(el).children('.innerCase').children('.BackGroundCase').children('table').children('tbody').children('tr').children('td.TCSalle').html().replace(/Salle:/, '')
             const remote = subject.toLowerCase().includes('distanciel') || room.toLowerCase().includes('distanciel')
 
