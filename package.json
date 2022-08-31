@@ -43,7 +43,7 @@
     "@adonisjs/vow": "^1.0.17",
     "cheerio": "^1.0.0-rc.3",
     "ical-generator": "^1.15.1",
-    "moment-timezone": "^0.5.31"
+    "moment-timezone": "^0.5.35"
   },
   "devDependencies": {
     "commitizen": "^4.2.1",
